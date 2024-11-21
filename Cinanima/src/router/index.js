@@ -3,10 +3,6 @@ import HomeView from '../views/HomeView.vue'
 import AuthenticationView from '../views/AuthenticationView.vue'
 import ExclusiveContentView from '../views/ExclusiveContentView.vue'
 
-const isAuthenticated = () => {
-  return !!localStorage.getItem('authToken')
-}
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -24,15 +20,20 @@ const router = createRouter({
       path: '/exclusiveContent',
       name: 'exclusiveContent',
       component: ExclusiveContentView,
-      beforeEnter: (to, from, next) => {
-        if (isAuthenticated()) {
-          next()
-        } else {
-          next({ name: 'authentication' })
-        }
+      meta: {
+        requiresAuth: true,
       },
     },
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem('isAuthenticated')
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next({ path: '/authentication', query: { from: to.path } })
+  } else {
+    next()
+  }
 })
 
 export default router
