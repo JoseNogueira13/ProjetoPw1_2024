@@ -53,6 +53,9 @@ const router = createRouter({
       path: '/userProfile',
       name: 'userProfile',
       component: UserProfileView,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: '/partners',
