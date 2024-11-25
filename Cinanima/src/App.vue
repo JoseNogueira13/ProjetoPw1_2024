@@ -9,11 +9,19 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink :to="{ name: 'home' }">Home</RouterLink>
         <RouterLink :to="{ name: 'authentication' }">Authentication</RouterLink>
         <RouterLink :to="{ name: 'exclusiveContent' }">Exclusive Content</RouterLink>
+        <RouterLink :to="{ name: 'artistProfile' }">Artist Profile</RouterLink>
+        <RouterLink :to="{name: 'eventCalendar'}">Event Calendar</RouterLink>
+        <RouterLink :to="{ name: 'ticket' }">Ticket</RouterLink>
+        <RouterLink :to="{ name: 'event' }">Event</RouterLink>
+        <RouterLink :to="{ name: 'userProfile' }">Profile</RouterLink>
+        <RouterLink :to="{ name: 'partners' }">Partners</RouterLink>
+        <RouterLink :to="{ name: 'about' }">About</RouterLink>
       </nav>
     </div>
+    <RouterView />
   </header>
 
-  <RouterView />
+  
 </template>
 
 <style>
@@ -39,6 +47,7 @@ nav a.router-link-exact-active:hover {
 
 nav a {
   display: inline-block;
+  padding: 0.5rem 1rem;
 }
 
 nav a:first-of-type {
