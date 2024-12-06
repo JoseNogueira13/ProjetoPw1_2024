@@ -10,6 +10,7 @@ export const useUserStore = defineStore('user', {
         password: 'admin123',
         information: [null],
         roles: ['admin'],
+        ticketType: [],
       },
       {
         id: 2,
@@ -18,6 +19,7 @@ export const useUserStore = defineStore('user', {
         password: 'user123',
         information: [null],
         roles: ['user'],
+        ticketType: [],
       },
     ],
     user: JSON.parse(localStorage.getItem('currentUser')) || null,
