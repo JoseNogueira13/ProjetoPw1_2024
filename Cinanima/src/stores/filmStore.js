@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useFilmStore = defineStore('films', {
   state: () => ({
-    filmes: 
+    filmes:
     [
       {
         idFilm: 1,
@@ -13,8 +13,7 @@ export const useFilmStore = defineStore('films', {
         diretor: 'Peter Jackson',
       },
     ],
-    //filme: {}
-    salas: 
+    salas:
     [
       {
         idSala: 1,
@@ -22,8 +21,7 @@ export const useFilmStore = defineStore('films', {
         capacidade: 50,
       },
     ],
-    //sala: {}
-    sessoes: 
+    sessoes:
     [
       {
         idSessao: 1,
@@ -32,8 +30,7 @@ export const useFilmStore = defineStore('films', {
         horario: '14:00',
       },
     ],
-    //sessao: {}
-    participantes: 
+    participantes:
     [
       {
         idParticipante: 1,
@@ -42,14 +39,19 @@ export const useFilmStore = defineStore('films', {
         idade: 25,
       },
     ],
-    //participante: {}
   }),
 
   getters: {
-
+    getFilmes: (state) => state.filmes,
+    getfilme: (state) => (id) => state.filmes.find(filme => filme.id === id),
+    getSalas: (state) => state.salas,
+    getSala: (state) => (id) => state.salas.find(sala => sala.id === id),
+    getSessoes: (state) => state.sessoes,
+    getSessao: (state) => (id) => state.sessoes.find(sessao => sessao.id === id),
   },
 
   actions: {
 
   },
+  persist: true
 });
