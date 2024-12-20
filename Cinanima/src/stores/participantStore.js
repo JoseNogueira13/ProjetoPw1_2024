@@ -1,20 +1,19 @@
 import { defineStore } from 'pinia';
 
-export const useParticipantStore = defineStore('participantes', {
+export const useParticipantStore = defineStore('participants', {
   state: () => ({
-    participantes:
-    [
+    participants: [
       {
-        idParticipante: 1,
-        idSessao: 1,
-        nome: 'João Silva',
-        idade: 25,
+        idParticipant: 1,
+        idSession: 1,
+        name: 'John Silva',
+        age: 25,
       },
     ],
   }),
 
   getters: {
-    getParticpantes: (state) => state.participantes,
+    getParticipants: (state) => state.participants,
   },
 
   actions: {

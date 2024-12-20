@@ -1,9 +1,9 @@
 <script>
-  import { useFilmeStore } from "../stores/filmStore.js"
+  import { useFilmStore } from "../stores/filmStore.js"
   export default {
     data() {
       return {
-        filmeStore: useFilmeStore()
+        filmeStore: useFilmStore()
       }
     },
     computed: {

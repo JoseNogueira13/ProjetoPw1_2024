@@ -1,22 +1,21 @@
 import { defineStore } from 'pinia';
 
-export const useFilmStore = defineStore('filmes', {
+export const useFilmStore = defineStore('film', {
   state: () => ({
-    filmes:
-    [
+    films: [
       {
         idFilm: 1,
-        nome: 'O Senhor dos Anéis',
-        genero: 'Fantasia',
-        duracao: 180,
-        faixaEtaria: 14,
-        diretor: 'Peter Jackson',
+        name: 'The Lord of the Rings',
+        genre: 'Fantasy',
+        duration: 180,
+        ageRating: 14,
+        director: 'Peter Jackson',
       },
     ],
   }),
 
   getters: {
-    getFilmes: (state) => state.filmes,
+    getFilms: (state) => state.films,
   },
 
   actions: {

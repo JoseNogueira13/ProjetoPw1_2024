@@ -1,19 +1,18 @@
 import { defineStore } from 'pinia';
 
-export const useRoomStore = defineStore('salas', {
+export const useRoomStore = defineStore('rooms', {
   state: () => ({
-    salas:
-    [
+    rooms: [
       {
-        idSala: 1,
-        nome: 'Sala 1',
-        capacidade: 50,
+        idRoom: 1,
+        name: 'Room 1',
+        capacity: 50,
       },
     ],
   }),
 
   getters: {
-    getSalas: (state) => state.salas,
+    getRooms: (state) => state.rooms,
   },
 
   actions: {

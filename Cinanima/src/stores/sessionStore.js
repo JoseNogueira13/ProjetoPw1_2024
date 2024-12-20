@@ -1,20 +1,19 @@
 import { defineStore } from 'pinia';
 
-export const useSessionStore = defineStore('salas', {
+export const useSessionStore = defineStore('sessions', {
   state: () => ({
-    sessoes:
-    [
+    sessions: [
       {
-        idSessao: 1,
-        idFilme: 1,
-        idSala: 1,
-        horario: '14:00',
+        idSession: 1,
+        idFilm: 1,
+        idRoom: 1,
+        time: '14:00',
       },
     ],
   }),
 
   getters: {
-    getSessoes: (state) => state.sessoes,
+    getSessions: (state) => state.sessions,
   },
 
   actions: {
