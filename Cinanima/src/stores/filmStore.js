@@ -105,4 +105,5 @@ export const useMiniFilmStore = defineStore("miniFilm", {
       }
     },
   },
+  persist: true
 });
