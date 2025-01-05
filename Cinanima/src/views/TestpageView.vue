@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { useMiniFilmStore } from "@/stores/filmStore";
+import { useMiniFilmStore } from "@/stores/moviesStore";
 
 export default {
   data() {
