@@ -35,11 +35,7 @@
         <v-card-title>Editar Filme</v-card-title>
         <v-card-text>
           <v-form ref="editForm">
-            <v-text-field
-              v-model="editedFilm.name"
-              label="Nome"
-              required
-            ></v-text-field>
+            <v-text-field v-model="editedFilm.name" label="Nome" required></v-text-field>
             <v-text-field
               v-model="editedFilm.genre"
               label="Gênero"
@@ -73,15 +69,13 @@
   </v-container>
 </template>
 
-
-
 <script>
-import { useFilmStore } from "@/stores/filmStore";
+import { useMiniFilmStore } from "@/stores/filmStore";
 
 export default {
   data() {
     return {
-      filmStore: useFilmStore(),
+      miniFilmStore: useMiniFilmStore(),
       headers: [
         { text: "ID", value: "idFilm" },
         { text: "Nome", value: "name" },
@@ -97,18 +91,19 @@ export default {
   },
   computed: {
     films() {
-      return this.filmStore.getFilms;
+      return this.miniFilmStore.getFilms;
     },
   },
   methods: {
     openEditModal(film) {
-      let filmById = this.filmStore.getFilmById(film.idFilm);console.table(filmById);
+      let filmById = this.miniFilmStore.getFilmById(film.idFilm);
+      console.table(filmById);
       this.editedFilm = { ...filmById }; // Clona os dados do filme selecionado
       this.editModal = true;
     },
     saveEdit() {
       if (this.$refs.editForm.validate()) {
-        this.filmStore.editFilm(this.editedFilm);
+        this.miniFilmStore.editFilm(this.editedFilm);
         this.closeEditModal();
       }
     },
@@ -118,14 +113,12 @@ export default {
     },
     removeFilm(id) {
       if (confirm("Deseja realmente remover este filme?")) {
-        this.filmStore.removeFilm(id);
+        this.miniFilmStore.removeFilm(id);
       }
     },
   },
 };
 </script>
-
-
 
 <style scoped>
 .v-toolbar-title {

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useFilmStore = defineStore("film", {
+export const useMiniFilmStore = defineStore("miniFilm", {
   state: () => ({
     films: [
       {
@@ -105,4 +105,5 @@ export const useFilmStore = defineStore("film", {
       }
     },
   },
+  persist: true
 });

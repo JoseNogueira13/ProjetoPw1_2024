@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
@@ -7,15 +7,22 @@ import { RouterLink, RouterView } from 'vue-router';
     <div class="wrapper">
       <nav>
         <RouterLink :to="{ name: 'home' }" class="nav-link">Home</RouterLink>
+
         <RouterLink :to="{ name: 'authentication' }" class="nav-link">Authentication</RouterLink>
+
         <RouterLink :to="{ name: 'exclusiveContent' }" class="nav-link">Exclusive Content</RouterLink>
         <RouterLink :to="{ name: 'artistProfile' }" class="nav-link">Artist Profile</RouterLink>
         <RouterLink :to="{ name: 'eventCalendar' }" class="nav-link">Event Calendar</RouterLink>
+
         <RouterLink :to="{ name: 'ticket' }" class="nav-link">Ticket</RouterLink>
         <RouterLink :to="{ name: 'event' }" class="nav-link">Event</RouterLink>
+
         <RouterLink :to="{ name: 'userProfile' }" class="nav-link">Profile</RouterLink>
+
         <RouterLink :to="{ name: 'partners' }" class="nav-link">Partners</RouterLink>
         <RouterLink :to="{ name: 'about' }" class="nav-link">About</RouterLink>
+        
+        <RouterLink :to="{ name: 'testPage' }" class="nav-link">TestPage</RouterLink>
       </nav>
     </div>
     <main>
