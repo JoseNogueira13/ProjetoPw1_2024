@@ -21,7 +21,7 @@ export const useMoviesStore = defineStore('movies', {
             api_key: API_KEY,
             with_genres: 16,
           },
-        });
+        });console.log(response);
 
         this.movies = response.data.results.map(movie => ({
           id: movie.id,
