@@ -1,47 +1,54 @@
 <script>
-import { mapState, mapActions } from 'pinia';
-import { useMoviesStore } from "@/stores/moviesStore";
+  import { useMiniFilmStore } from "@/stores/moviesStore.js"
 
-export default {
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapState(useMoviesStore, ['movies', 'loading', 'error']),
-  },
-  methods: {
-    ...mapActions(useMoviesStore, ['fetchMovies']),
-  },
-  created() {
-    this.fetchMovies();
-  },
-};
+  export default {
+    data() {
+      return {
+        miniFilmStore: useMiniFilmStore(),
+      }
+    },
+    created() {
+      this.miniFilmStore.fetchMiniFilms();
+
+    },
+    computed: {
+      miniFilms() {
+        return this.miniFilmStore.miniFilms;
+      },
+      loading() {
+        return this.miniFilmStore.loading;
+      },
+      error() {
+        return this.miniFilmStore.error;
+      }
+
+    }
+  };
 </script>
 
 <template>
   <main>
-    <div v-if="loading">Loading movies...</div>
+    <div v-if="loading">Loading mini films...</div>
     <div v-else-if="error">{{ error }}</div>
     <div v-else>
-      <div v-for="movie in movies" :key="movie.title" class="movie">
-        <img :src="movie.image" :alt="movie.title" />
-        <h2>{{ movie.id }}</h2>
-        <h2>{{ movie.title }}</h2>
-        <p>{{ movie.description }}</p>
+      <div v-for="film in miniFilms" :key="film.id" class="film">
+        <img :src="film.image" :alt="film.title" />
+        <h2>{{ film.title }}</h2>
+        <p>{{ film.description }}</p>
       </div>
     </div>
   </main>
 </template>
 
 <style>
-.movie {
+.film {
   margin-bottom: 20px;
 }
-.movie img {
+.film img {
   max-width: 100px;
   margin-right: 10px;
 }
-.movie h2 {
+.film h2 {
   font-size: 1.2rem;
 }
 </style>
@@ -50,7 +57,9 @@ export default {
 
 
 
+
 <!-- <script>
+  import { mapState, mapActions } from 'pinia';
   import { useMiniFilmStore } from "../stores/filmStore.js"
   export default {
     data() {
