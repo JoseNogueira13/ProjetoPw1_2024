@@ -1,3 +1,18 @@
+<template>
+  <main>
+    <div v-if="loading">Loading mini films...</div>
+    <div v-else-if="error">{{ error }}</div>
+    <div v-else>
+      <div v-for="film in miniFilms" :key="film.id" class="film">
+        <img :src="film.image" :alt="film.title" />
+        <h2>{{ film.title }}</h2>
+        <p>{{ film.description }}</p>
+        <button @click="seeMore(film.id)">See More</button>
+      </div>
+    </div>
+  </main>
+</template>
+
 <script>
 import { useMiniFilmStore } from "@/stores/moviesStore.js";
 
@@ -21,22 +36,16 @@ export default {
       return this.miniFilmStore.error;
     },
   },
+  methods: {
+    seeMore(id) {
+  console.log('Navigating to event:', id); // Debug
+  this.$router.push({ name: 'event', params: { id } });
+}
+
+},
 };
 </script>
 
-<template>
-  <main>
-    <div v-if="loading">Loading mini films...</div>
-    <div v-else-if="error">{{ error }}</div>
-    <div v-else>
-      <div v-for="film in miniFilms" :key="film.id" class="film">
-        <img :src="film.image" :alt="film.title" />
-        <h2>{{ film.title }}</h2>
-        <p>{{ film.description }}</p>
-      </div>
-    </div>
-  </main>
-</template>
 
 <style>
 .film {

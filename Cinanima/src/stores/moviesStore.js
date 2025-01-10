@@ -13,12 +13,14 @@ export const useMiniFilmStore = defineStore("miniFilm", {
     miniFilms: [],
     loading: false,
     error: null,
+    currentMovie: null,
   }),
 
   getters: {
     getMiniFilms: (state) => state.miniFilms,
     getLoading: (state) => state.loading,
     getError: (state) => state.error,
+    getCurrentMovie: (state) => state.currentMovie,
   },
 
   actions: {
@@ -39,6 +41,28 @@ export const useMiniFilmStore = defineStore("miniFilm", {
         this.error = error.message || "Erro desconhecido";
       }
       finally {
+        this.loading = false;
+      }
+    },
+    async fetchMovieDetails(id) {
+      this.loading = true;
+      this.error = null;
+      try {
+        const response = await API.get(
+          `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
+
+        );
+        this.currentMovie = {
+          id: response.id,
+          title: response.title,
+          description: response.overview,
+          image: `${IMAGE_BASE_URL}${response.poster_path}`,
+          releaseDate: response.release_date,
+          rating: response.vote_average,
+        };
+      } catch (error) {
+        this.error = error.message || "Failed to fetch movie details";
+      } finally {
         this.loading = false;
       }
     },

@@ -45,10 +45,11 @@ const router = createRouter({
       component: TicketView,
     },
     {
-      path: '/event',
+      path: '/event/:id',
       name: 'event',
       component: EventView,
     },
+       
     {
       path: '/userProfile',
       name: 'userProfile',
