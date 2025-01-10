@@ -5,8 +5,8 @@ import { defineStore } from "pinia";
 import * as API from "../API/api";
 
 const API_KEY = 'e822b54ec67f836fb05ce1d59e337e21';
-const BASE_URL = 'https://api.themoviedb.org/3';
-//const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
+const BASE_URL = `https://api.themoviedb.org/3/discover`;
+const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
 export const useMiniFilmStore = defineStore("miniFilm", {
   state: () => ({
@@ -16,7 +16,9 @@ export const useMiniFilmStore = defineStore("miniFilm", {
   }),
 
   getters: {
-    getFilms: (state) => state.miniFilms,
+    getMiniFilms: (state) => state.miniFilms,
+    getLoading: (state) => state.loading,
+    getError: (state) => state.error,
   },
 
   actions: {
@@ -24,10 +26,14 @@ export const useMiniFilmStore = defineStore("miniFilm", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await API.get(BASE_URL, 'discover/movie'); console.log(response);
-        //this.miniFilms = response.data || []; console.log(this.miniFilms);
+        const response = await API.get(BASE_URL, `movie?api_key=${API_KEY}`); console.log(response);
 
-
+        this.miniFilms = response.results.map(miniFilm => ({
+          id: miniFilm.id,
+          title: miniFilm.title,
+          description: miniFilm.overview,
+          image: `${IMAGE_BASE_URL}${miniFilm.poster_path}`,
+        })); console.log(this.miniFilms)
       }
       catch (error) {
         this.error = error.message || "Erro desconhecido";

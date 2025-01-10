@@ -1,29 +1,27 @@
 <script>
-  import { useMiniFilmStore } from "@/stores/moviesStore.js"
+import { useMiniFilmStore } from "@/stores/moviesStore.js";
 
-  export default {
-    data() {
-      return {
-        miniFilmStore: useMiniFilmStore(),
-      }
+export default {
+  data() {
+    return {
+      miniFilmStore: useMiniFilmStore(),
+    };
+  },
+  created() {
+    this.miniFilmStore.fetchMiniFilms();
+  },
+  computed: {
+    miniFilms() {
+      return this.miniFilmStore.getMiniFilms;
     },
-    created() {
-      this.miniFilmStore.fetchMiniFilms();
-
+    loading() {
+      return this.miniFilmStore.loading;
     },
-    computed: {
-      miniFilms() {
-        return this.miniFilmStore.miniFilms;
-      },
-      loading() {
-        return this.miniFilmStore.loading;
-      },
-      error() {
-        return this.miniFilmStore.error;
-      }
-
-    }
-  };
+    error() {
+      return this.miniFilmStore.error;
+    },
+  },
+};
 </script>
 
 <template>
@@ -53,11 +51,6 @@
 }
 </style>
 
-
-
-
-
-
 <!-- <script>
   import { mapState, mapActions } from 'pinia';
   import { useMiniFilmStore } from "../stores/filmStore.js"
@@ -83,29 +76,29 @@
 
   <v-container>
     <v-row> -->
-      <!-- Iterando sobre os filmes da store -->
-      <!-- <v-col
+<!-- Iterando sobre os filmes da store -->
+<!-- <v-col
         v-for="filme in filmes"
         :key="filme.idFilm"
         cols="4"
       >
         <v-card class="mx-auto" max-width="1400"> -->
-          <!-- Título do Filme -->
-          <!-- <v-card-title>{{ filme.nome }}</v-card-title> -->
+<!-- Título do Filme -->
+<!-- <v-card-title>{{ filme.nome }}</v-card-title> -->
 
-          <!-- Gênero e Faixa Etária -->
-          <!-- <v-card-subtitle class="text-gray-500">
+<!-- Gênero e Faixa Etária -->
+<!-- <v-card-subtitle class="text-gray-500">
             {{ filme.genero }} - {{ filme.faixaEtaria }}+
           </v-card-subtitle> -->
 
-          <!-- Detalhes do Filme -->
-          <!-- <v-card-text>
+<!-- Detalhes do Filme -->
+<!-- <v-card-text>
             <div><strong>Duração:</strong> {{ filme.duracao }} minutos</div>
             <div><strong>Diretor:</strong> {{ filme.diretor }}</div>
           </v-card-text> -->
 
-          <!-- Botões de Ação -->
-          <!--<v-card-actions>
+<!-- Botões de Ação -->
+<!--<v-card-actions>
             <router-link
               :to="{ name: 'filmeDetalhes', params: { id: filme.idFilm } }"
             >
@@ -115,7 +108,7 @@
               Remover
             </v-btn>
           </v-card-actions>-->
-        <!-- </v-card>
+<!-- </v-card>
       </v-col>
     </v-row>
   </v-container>
