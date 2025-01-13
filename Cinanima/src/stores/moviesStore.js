@@ -5,7 +5,7 @@ import { defineStore } from "pinia";
 import * as API from "../API/api";
 
 const API_KEY = 'e822b54ec67f836fb05ce1d59e337e21';
-const BASE_URL = `https://api.themoviedb.org/3/discover`;
+const BASE_URL = `https://api.themoviedb.org/3`;
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
 export const useMiniFilmStore = defineStore("miniFilm", {
@@ -28,7 +28,7 @@ export const useMiniFilmStore = defineStore("miniFilm", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await API.get(BASE_URL, `movie?api_key=${API_KEY}`); console.log(response);
+        const response = await API.get(BASE_URL, `discover/movie?api_key=${API_KEY}`); //console.log(response);
 
         this.miniFilms = response.results.map(miniFilm => ({
           id: miniFilm.id,
@@ -48,10 +48,8 @@ export const useMiniFilmStore = defineStore("miniFilm", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await API.get(
-          `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
+        const response = await API.get(BASE_URL,`movie/${id}?api_key=${API_KEY}`); //console.log(response);
 
-        );
         this.currentMovie = {
           id: response.id,
           title: response.title,
@@ -59,13 +57,13 @@ export const useMiniFilmStore = defineStore("miniFilm", {
           image: `${IMAGE_BASE_URL}${response.poster_path}`,
           releaseDate: response.release_date,
           rating: response.vote_average,
-        };
+        }; console.log(this.currentMovie)
       } catch (error) {
         this.error = error.message || "Failed to fetch movie details";
       } finally {
         this.loading = false;
       }
-    },
+    },/*--------------------------------Funções admistrador--------------------------------*/
     addFilm(film) {
       this.miniFilms.push(film);
     },

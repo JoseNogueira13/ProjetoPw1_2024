@@ -114,4 +114,5 @@ export const useUserStore = defineStore('user', {
       return `${encodedHeader}.${encodedPayload}.`;
     },
   },
+  persist: true
 });

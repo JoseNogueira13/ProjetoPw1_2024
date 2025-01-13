@@ -38,14 +38,12 @@ export default {
   },
   methods: {
     seeMore(id) {
-  console.log('Navigating to event:', id); // Debug
-  this.$router.push({ name: 'event', params: { id } });
-}
-
-},
+      console.log("Navigating to event:", id); // Debug
+      this.$router.push({ name: "event", params: { id } });
+    },
+  },
 };
 </script>
-
 
 <style>
 .film {
