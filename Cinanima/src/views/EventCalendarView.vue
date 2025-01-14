@@ -7,6 +7,7 @@
         <img :src="film.image" :alt="film.title" />
         <h2>{{ film.title }}</h2>
         <p>{{ film.description }}</p>
+        <p>{{ film.id }}</p>
         <button @click="seeMore(film.id)">See More</button>
       </div>
     </div>
@@ -38,12 +39,13 @@ export default {
   },
   methods: {
     seeMore(id) {
-      console.log("Navigating to event:", id); // Debug
-      this.$router.push({ name: "event", params: { id } });
-    },
-  },
+  console.log('Navigating to event:', id); // Debug
+  this.$router.push({ name: 'event', params: { id } });
+}
+},
 };
 </script>
+
 
 <style>
 .film {
