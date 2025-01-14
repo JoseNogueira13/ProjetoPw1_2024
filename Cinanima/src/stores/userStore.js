@@ -11,6 +11,7 @@ export const useUserStore = defineStore('user', {
         information: [null],
         roles: ['admin'],
         ticketType: [],
+        calendar : [],
       },
       {
         id: 2,
@@ -20,6 +21,7 @@ export const useUserStore = defineStore('user', {
         information: [null],
         roles: ['user'],
         ticketType: [],
+        calendar : [],
       },
     ],
     user: JSON.parse(localStorage.getItem('currentUser')) || null,
@@ -39,6 +41,7 @@ export const useUserStore = defineStore('user', {
         return null;
       }
     },
+    getUserCalendar: (state) => state.user?.calendar || [],
   },
 
   actions: {
@@ -112,6 +115,45 @@ export const useUserStore = defineStore('user', {
       const encodedHeader = btoa(JSON.stringify(header));
       const encodedPayload = btoa(JSON.stringify(payload));
       return `${encodedHeader}.${encodedPayload}.`;
+    },
+
+    addToCalendar(filmId) {
+      if (!this.user) {
+        console.error('No user is logged in.');
+        return;
+      }
+
+      const existingFilm = this.user.calendar.find(
+        (item) => item.filmId.id === filmId.id
+      );
+    
+      if (!existingFilm) {
+        this.user.calendar.push({ filmId, seen: false });
+        localStorage.setItem("currentUser", JSON.stringify(this.user));
+        console.log(`Film with ID: ${filmId.id} added to calendar.`);
+      } else {
+        console.log(`Film with ID: ${filmId.id} is already in the calendar.`);
+      }
+    },
+    
+
+    markFilmAsSeen(filmId) {
+      if (!this.user) return;
+    
+      const film = this.user.calendar.find((item) => item.filmId.id === filmId);
+      if (film) {
+        film.seen = true;
+        localStorage.setItem("currentUser", JSON.stringify(this.user));
+        console.log(`Film with ID: ${filmId} marked as seen.`);
+      }
+    },
+
+    removeFromCalendar(filmId) {
+      if (!this.user) return;
+    
+      this.user.calendar = this.user.calendar.filter((item) => item.filmId.id !== filmId);
+      localStorage.setItem("currentUser", JSON.stringify(this.user));
+      console.log(`Film with ID: ${filmId} removed from calendar.`);
     },
   },
   persist: true

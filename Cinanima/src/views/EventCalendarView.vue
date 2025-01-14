@@ -7,8 +7,9 @@
         <img :src="film.image" :alt="film.title" />
         <h2>{{ film.title }}</h2>
         <p>{{ film.description }}</p>
-        <p>{{ film.id }}</p>
+        <p>{{ film.id }}</p> <!-- Debug -->
         <button @click="seeMore(film.id)">See More</button>
+        <button @click="addToCalendar(film)">Add to Calendar Test</button>
       </div>
     </div>
   </main>
@@ -16,11 +17,13 @@
 
 <script>
 import { useMiniFilmStore } from "@/stores/moviesStore.js";
+import { useUserStore } from "@/stores/userStore.js";
 
 export default {
   data() {
     return {
       miniFilmStore: useMiniFilmStore(),
+      userStore: useUserStore(),
     };
   },
   created() {
@@ -39,9 +42,14 @@ export default {
   },
   methods: {
     seeMore(id) {
-  console.log('Navigating to event:', id); // Debug
-  this.$router.push({ name: 'event', params: { id } });
-}
+      console.log('Navigating to event:', id); // Debug
+      this.$router.push({ name: 'event', params: { id } });
+    },
+    addToCalendar(filmId) {
+      this.userStore.addToCalendar(filmId);
+      console.log(`Film with ID: ${filmId} added to calendar!`);
+    },
+  
 },
 };
 </script>
