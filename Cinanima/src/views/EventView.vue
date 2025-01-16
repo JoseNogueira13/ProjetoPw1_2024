@@ -7,16 +7,26 @@
     <p>{{ movie.description }}</p>
     <p><strong>Release Date:</strong> {{ movie.releaseDate }}</p>
     <p><strong>Rating:</strong> {{ movie.rating }}</p>
+
+    <p>
+      <strong>Likes:</strong> {{ movie.likes || 0 }}
+      <button 
+        @click="likeMovie(movie.id)" :disabled="isLiked">{{ isLiked ? "Liked" : "Like" }}
+      </button>
+    </p>
+
   </div>
 </template>
 
 <script>
 import { useMiniFilmStore } from "@/stores/moviesStore.js";
+import { useUserStore } from "@/stores/userStore.js";
 
 export default {
   data() {
     return {
       miniFilmStore: useMiniFilmStore(),
+      userStore: useUserStore(),
     };
   },
   computed: {
@@ -28,6 +38,14 @@ export default {
     },
     error() {
       return this.miniFilmStore.getError;
+    },
+    isLiked() {
+    return this.userStore.getLikedMovies.includes(this.movie.id);
+  },
+  },
+  methods: {
+    likeMovie(id) {
+      this.miniFilmStore.likeMovie(id);
     },
   },
   async created() {

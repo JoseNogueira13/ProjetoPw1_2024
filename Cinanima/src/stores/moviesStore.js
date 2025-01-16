@@ -4,6 +4,8 @@
 import { defineStore } from "pinia";
 import * as API from "../API/api";
 
+import { useUserStore } from "@/stores/userStore";
+
 const API_KEY = 'e822b54ec67f836fb05ce1d59e337e21';
 const BASE_URL = `https://api.themoviedb.org/3`;
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
@@ -57,6 +59,7 @@ export const useMiniFilmStore = defineStore("miniFilm", {
           image: `${IMAGE_BASE_URL}${response.poster_path}`,
           releaseDate: response.release_date,
           rating: response.vote_average,
+          likes: 0,
         }; console.log(this.currentMovie)
       } catch (error) {
         this.error = error.message || "Failed to fetch movie details";
@@ -75,6 +78,37 @@ export const useMiniFilmStore = defineStore("miniFilm", {
       if (index !== -1) {
         this.miniFilms[index] = { ...updatedFilm }; // Atualiza o filme correspondente
       }
+    },
+    likeMovie(id) {
+      const userStore = useUserStore();
+      if (!userStore.user) {
+        console.error("User is not logged in!");
+        return;
+      }
+    
+      const movie = this.miniFilms.find((film) => film.id === id);
+      if (!movie) {
+        console.error("Movie not found!");
+        return;
+      }
+    
+      if (userStore.user.likedMovies.includes(id)) {
+        console.log("User has already liked this movie!");
+        return;
+      }
+
+      movie.likes = (movie.likes || 0) + 1;
+    
+      userStore.user.likedMovies.push(id);
+
+      localStorage.setItem("currentUser", JSON.stringify(userStore.user));
+      localStorage.setItem("miniFilms", JSON.stringify(this.miniFilms));
+    
+      if (this.currentMovie?.id === id) {
+        this.currentMovie.likes = (this.currentMovie.likes || 0) + 1;
+      }
+    
+      console.log(`Movie with ID ${id} liked by ${userStore.user.name}`);
     },
   },
   persist: true,

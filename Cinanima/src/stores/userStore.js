@@ -12,6 +12,7 @@ export const useUserStore = defineStore('user', {
         roles: ['admin'],
         ticketType: [],
         calendar : [],
+        likedMovies: [],
       },
       {
         id: 2,
@@ -22,6 +23,7 @@ export const useUserStore = defineStore('user', {
         roles: ['user'],
         ticketType: [],
         calendar : [],
+        likedMovies: [],
       },
     ],
     user: JSON.parse(localStorage.getItem('currentUser')) || null,
@@ -42,6 +44,7 @@ export const useUserStore = defineStore('user', {
       }
     },
     getUserCalendar: (state) => state.user?.calendar || [],
+    getLikedMovies: (state) => state.user?.likedMovies || [],
   },
 
   actions: {
