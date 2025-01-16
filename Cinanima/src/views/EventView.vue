@@ -15,6 +15,28 @@
       </button>
     </p>
 
+    <section class="comments">
+      <h2>Comments</h2>
+
+      <form @submit.prevent="postComment">
+        <input 
+          v-model="newComment" 
+          type="text" 
+          placeholder="Add a comment" 
+          required 
+        />
+        <button type="submit">Post Comment</button>
+      </form>
+
+      <ul>
+        <li v-for="comment in movieComments" :key="comment.id">
+          <strong>{{ comment.username }}</strong> 
+          <small>({{ comment.time }})</small>
+          <p>{{ comment.text }}</p>
+        </li>
+      </ul>
+    </section>
+
   </div>
 </template>
 
@@ -27,6 +49,7 @@ export default {
     return {
       miniFilmStore: useMiniFilmStore(),
       userStore: useUserStore(),
+      newComment: "",
     };
   },
   computed: {
@@ -41,11 +64,29 @@ export default {
     },
     isLiked() {
     return this.userStore.getLikedMovies.includes(this.movie.id);
-  },
+    },
+    movieComments() {
+      return this.miniFilmStore.comments[this.movie.id] || [];
+    },
   },
   methods: {
     likeMovie(id) {
       this.miniFilmStore.likeMovie(id);
+    },
+    postComment() {
+      const username = this.userStore.user.name;
+      const time = new Date().toLocaleString();
+
+      const comment = {
+        id: Date.now(),
+        username,
+        time,
+        text: this.newComment,
+      };
+
+      this.miniFilmStore.addComment(this.movie.id, comment);
+
+      this.newComment = "";
     },
   },
   async created() {

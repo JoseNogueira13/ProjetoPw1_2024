@@ -16,6 +16,8 @@ export const useMiniFilmStore = defineStore("miniFilm", {
     loading: false,
     error: null,
     currentMovie: null,
+    comments: JSON.parse(localStorage.getItem("movieComments")) || {},
+    likes: {},
   }),
 
   getters: {
@@ -109,6 +111,14 @@ export const useMiniFilmStore = defineStore("miniFilm", {
       }
     
       console.log(`Movie with ID ${id} liked by ${userStore.user.name}`);
+    },
+    addComment(movieId, comment) {
+      if (!this.comments[movieId]) {
+        this.comments[movieId] = [];
+      }
+      this.comments[movieId].push(comment);
+
+      localStorage.setItem("movieComments", JSON.stringify(this.comments));
     },
   },
   persist: true,
