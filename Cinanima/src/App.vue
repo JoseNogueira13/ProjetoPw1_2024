@@ -16,24 +16,116 @@ import { RouterLink, RouterView } from "vue-router";
       <v-navigation-drawer app permanent>
         <v-list>
           <v-list-item-group>
+            <!-- Home -->
             <v-list-item>
               <v-list-item-icon>
                 <v-icon>mdi-home</v-icon>
               </v-list-item-icon>
-              <v-list-item-title>Home</v-list-item-title>
+              <v-list-item-title>
+                <RouterLink :to="{ name: 'home' }" class="nav-link">Home</RouterLink>
+              </v-list-item-title>
             </v-list-item>
+
+            <!-- Authentication -->
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-account-lock</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>
+                <RouterLink :to="{ name: 'authentication' }" class="nav-link">Authentication</RouterLink>
+              </v-list-item-title>
+            </v-list-item>
+
+            <!-- Exclusive Content -->
             <v-list-item>
               <v-list-item-icon>
                 <v-icon>mdi-filmstrip</v-icon>
               </v-list-item-icon>
-              <v-list-item-title>Explorar Curtas</v-list-item-title>
+              <v-list-item-title>
+                <RouterLink :to="{ name: 'exclusiveContent' }" class="nav-link">Exclusive Content</RouterLink>
+              </v-list-item-title>
             </v-list-item>
+
+            <!-- Artist Profile -->
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-account-circle</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>
+                <RouterLink :to="{ name: 'artistProfile' }" class="nav-link">Artist Profile</RouterLink>
+              </v-list-item-title>
+            </v-list-item>
+
+            <!-- Event Calendar -->
             <v-list-item>
               <v-list-item-icon>
                 <v-icon>mdi-calendar</v-icon>
               </v-list-item-icon>
-              <v-list-item-title>Eventos</v-list-item-title>
+              <v-list-item-title>
+                <RouterLink :to="{ name: 'eventCalendar' }" class="nav-link">Event Calendar</RouterLink>
+              </v-list-item-title>
             </v-list-item>
+
+            <!-- Ticket -->
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-ticket</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>
+                <RouterLink :to="{ name: 'ticket' }" class="nav-link">Ticket</RouterLink>
+              </v-list-item-title>
+            </v-list-item>
+
+            <!-- Event with ID -->
+            <v-list-item v-if="someId">
+              <v-list-item-icon>
+                <v-icon>mdi-calendar-check</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>
+                <RouterLink :to="{ name: 'event', params: { id: someId } }" class="nav-link">Event</RouterLink>
+              </v-list-item-title>
+            </v-list-item>
+
+            <!-- User Profile -->
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-account</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>
+                <RouterLink :to="{ name: 'userProfile' }" class="nav-link">Profile</RouterLink>
+              </v-list-item-title>
+            </v-list-item>
+
+            <!-- Partners -->
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-handshake</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>
+                <RouterLink :to="{ name: 'partners' }" class="nav-link">Partners</RouterLink>
+              </v-list-item-title>
+            </v-list-item>
+
+            <!-- About -->
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-information</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>
+                <RouterLink :to="{ name: 'about' }" class="nav-link">About</RouterLink>
+              </v-list-item-title>
+            </v-list-item>
+
+            <!-- Test Page -->
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-test-tube</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>
+                <RouterLink :to="{ name: 'testPage' }" class="nav-link">TestPage</RouterLink>
+              </v-list-item-title>
+            </v-list-item>
+
           </v-list-item-group>
         </v-list>
       </v-navigation-drawer>
@@ -55,6 +147,7 @@ import { RouterLink, RouterView } from "vue-router";
       </v-container>
     </v-footer>
   </v-app>
+
 </template>
 
 <style>
@@ -87,7 +180,8 @@ body,
 .content-container {
   flex-grow: 1;
   overflow-y: auto;
-  padding-bottom: 64px; /* Ajusta o espaço para o footer */
+  padding-bottom: 64px;
+  /* Ajusta o espaço para o footer */
 }
 
 /* Rodapé */
@@ -95,5 +189,14 @@ body,
   z-index: 2;
   position: relative;
   background-color: #fff;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-link:hover {
+  color: #007bff; /* Cor ao passar o mouse */
 }
 </style>
