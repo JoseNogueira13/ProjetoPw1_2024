@@ -3,110 +3,97 @@ import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink :to="{ name: 'home' }" class="nav-link">Home</RouterLink>
+  <v-app>
+    <!-- Header -->
+    <v-app-bar app>
+      <v-toolbar-title>Plataforma de Curtas Animados</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn text>Login</v-btn>
+      <v-btn text>Cadastro</v-btn>
+    </v-app-bar>
 
-        <RouterLink :to="{ name: 'authentication' }" class="nav-link">Authentication</RouterLink>
+    <v-container class="main-layout" fluid>
+      <v-navigation-drawer app permanent>
+        <v-list>
+          <v-list-item-group>
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-home</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Home</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-filmstrip</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Explorar Curtas</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-icon>
+                <v-icon>mdi-calendar</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Eventos</v-list-item-title>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
+    </v-container>
 
-        <RouterLink :to="{ name: 'exclusiveContent' }" class="nav-link">Exclusive Content</RouterLink>
-        <RouterLink :to="{ name: 'artistProfile' }" class="nav-link">Artist Profile</RouterLink>
-        <RouterLink :to="{ name: 'eventCalendar' }" class="nav-link">Event Calendar</RouterLink>
+    <!-- Main Content -->
+    <v-main class="fill-height">
+      <div class="content-container">
+        <RouterView />
+      </div>
+    </v-main>
 
-        <RouterLink :to="{ name: 'ticket' }" class="nav-link">Ticket</RouterLink>
-        <RouterLink v-if="someId" :to="{ name: 'event', params: { id: someId } }" class="nav-link">Event</RouterLink>
-
-        <RouterLink :to="{ name: 'userProfile' }" class="nav-link">Profile</RouterLink>
-       <RouterLink :to="{ name: 'partners' }" class="nav-link">Partners</RouterLink>
-        <RouterLink :to="{ name: 'about' }" class="nav-link">About</RouterLink>
-        
-        <RouterLink :to="{ name: 'testPage' }" class="nav-link">TestPage</RouterLink>
-      </nav>
-    </div>
-    <main>
-      <RouterView />
-    </main>
-  </header>
+    <!-- Footer -->
+    <v-footer app class="footer">
+      <v-container>
+        <v-row>
+          <v-col class="text-center"> © 2025 - Plataforma de Curtas Animados </v-col>
+        </v-row>
+      </v-container>
+    </v-footer>
+  </v-app>
 </template>
 
 <style>
-:root {
-  --color-text: #ffffff;
-  --color-primary: #007bff;
-  --color-secondary: #0056b3;
-}
-
-body {
+html,
+body,
+#app {
+  height: 100%;
+  width: 100%;
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  color: #333;
-}
-
-header {
+  padding: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  background-color: #007bff;
-  color: var(--color-text);
+  overflow: hidden;
+  background-color: #f4f4f9;
 }
 
-.wrapper {
-  width: 100%;
-  max-width: 1200px;
-  padding: 0 1rem;
-}
-
-nav {
+.v-app {
+  flex: 1;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 1rem 0;
+  flex-direction: column;
 }
 
-.nav-link {
-  text-decoration: none;
-  color: var(--color-text);
-  padding: 0.5rem 1rem;
-  margin: 0 0.5rem;
-  border-radius: 4px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+.v-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-.nav-link.router-link-exact-active {
-  font-weight: bold;
-  background-color: var(--color-secondary);
+.content-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-bottom: 64px; /* Ajusta o espaço para o footer */
 }
 
-.nav-link:hover {
-  background-color: var(--color-secondary);
-  color: #fff;
-}
-
-main {
-  width: 100%;
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-  box-sizing: border-box;
-}
-
-@media (min-width: 1024px) {
-  header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-  }
-
-  nav {
-    justify-content: flex-start;
-  }
-
-  .nav-link {
-    margin: 0 1rem;
-  }
+/* Rodapé */
+.v-footer {
+  z-index: 2;
+  position: relative;
+  background-color: #fff;
 }
 </style>

@@ -9,7 +9,7 @@
         <p>{{ film.description }}</p>
         <p>{{ film.id }}</p> <!-- Debug -->
         <button @click="seeMore(film.id)">See More</button>
-        <button @click="addToCalendar(film)">Add to Calendar Test</button>
+        <button @click="addToCalendar(film.id)">Add to Calendar Test</button>
       </div>
     </div>
   </main>
@@ -47,9 +47,9 @@ export default {
     },
     addToCalendar(filmId) {
       this.userStore.addToCalendar(filmId);
-      console.log(`Film with ID: ${filmId} added to calendar!`);
+
     },
-  
+
 },
 };
 </script>

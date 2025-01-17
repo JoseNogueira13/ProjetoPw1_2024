@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.14.0",
+    "@mdi/font": "^7.4.47",
     "@vitejs/plugin-vue": "^5.1.4",
     "@vitest/eslint-plugin": "1.1.7",
     "@vue/eslint-config-prettier": "^10.1.0",
