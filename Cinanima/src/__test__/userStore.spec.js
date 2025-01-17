@@ -111,7 +111,7 @@ describe('userStore', () => {
     const userStore = useUserStore();
     userStore.login({ email: 'user@gmail.com', password: 'user123' });
 
-    const film = { id: 1, title: 'Inception' };
+    const film = { id: 1, title: 'Sonic the Hedgehog 7' };
     userStore.addToCalendar(film);
 
     expect(userStore.user.calendar).toContainEqual({ filmId: film, seen: false });
@@ -123,7 +123,7 @@ describe('userStore', () => {
     const userStore = useUserStore();
     userStore.login({ email: 'user@gmail.com', password: 'user123' });
 
-    const film = { id: 1, title: 'Inception' };
+    const film = { id: 1, title: 'Sonic the Hedgehog 7' };
     userStore.addToCalendar(film);
     userStore.addToCalendar(film);
 
@@ -135,7 +135,7 @@ describe('userStore', () => {
     const userStore = useUserStore();
     userStore.login({ email: 'user@gmail.com', password: 'user123' });
 
-    const film = { id: 1, title: 'Inception' };
+    const film = { id: 1, title: 'Sonic the Hedgehog 7' };
     userStore.addToCalendar(film);
     userStore.removeFromCalendar(film.id);
 
