@@ -32,7 +32,7 @@ describe('userStore', () => {
     const userStore = useUserStore();
     expect(userStore.user).toBeNull();
     expect(userStore.token).toBeNull();
-    expect(userStore.isAuthenticated).toBeFalsy();
+    expect(userStore.isUserAuthenticated).toBeFalsy();
   });
 
   // CHECK IF A USER WITH CORRECT CREDENTIALS CAN LOGIN
@@ -100,7 +100,7 @@ describe('userStore', () => {
   it('should throw an error for an expired token', () => {
     const userStore = useUserStore();
     userStore.token = 'expired.token.value';
-    
+
     expect(() => {
       userStore.verifyToken();
     }).toThrowError('Token expired or invalid. Please log in again.');

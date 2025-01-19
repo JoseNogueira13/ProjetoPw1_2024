@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    isAuthenticated: false,
+    isUserAuthenticated: false,
     user: null,
     users: [
       {
@@ -20,7 +20,7 @@ export const useUserStore = defineStore("user", {
   }),
 
   getters: {
-    isAuthenticated: (state) => state.isAuthenticated,
+    isAuthenticated: (state) => state.isUserAuthenticated,
     getUser: (state) => state.user,
     getUserCalendar: (state) => state.user?.calendar || [],
     getLikedMovies: (state) => state.user?.likedMovies || [],

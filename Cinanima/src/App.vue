@@ -1,5 +1,25 @@
-<script setup>
+<script>
 import { RouterLink, RouterView } from "vue-router";
+import { useUserStore } from "./stores/userStore.js";
+
+export default {
+  data() {
+    return {
+      userStore: useUserStore(),
+    };
+  },
+  created() {
+    console.log(this.userStore.isUserAuthenticated)
+  },
+  computed: {
+    isAuthenticated() {
+      return this.userStore?.isUserAuthenticated
+    },
+    userName() {
+      return this.userStore?.user.name
+    },
+  },
+}
 </script>
 
 <template>
@@ -8,8 +28,14 @@ import { RouterLink, RouterView } from "vue-router";
     <v-app-bar app>
       <v-toolbar-title>Plataforma de Curtas Animados</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn text>Login</v-btn>
-      <v-btn text>Cadastro</v-btn>
+      <template v-if="isAuthenticated">
+        <v-btn text disabled>Olá, {{ userName }}</v-btn>
+      </template>
+      <template v-else>
+        <v-btn>
+          <RouterLink :to="{ name: 'authentication' }" class="nav-link">Login/Registro</RouterLink>
+        </v-btn>
+      </template>
     </v-app-bar>
 
     <v-container class="main-layout" fluid>
@@ -151,7 +177,9 @@ import { RouterLink, RouterView } from "vue-router";
 </template>
 
 <style>
-html, body, #app {
+html,
+body,
+#app {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -179,15 +207,18 @@ html, body, #app {
 .content-container {
   flex-grow: 1;
   overflow-y: auto;
-  padding-bottom: 50px; /* A altura do rodapé */
+  padding-bottom: 50px;
+  /* A altura do rodapé */
 }
 
 .v-footer {
   z-index: 2;
   position: relative;
   background-color: #fff;
-  height: 50px; /* Altura do rodapé */
-  width: 100%; /* Garante que o rodapé ocupe toda a largura da tela */
+  height: 50px;
+  /* Altura do rodapé */
+  width: 100%;
+  /* Garante que o rodapé ocupe toda a largura da tela */
 }
 
 .nav-link {
@@ -196,6 +227,7 @@ html, body, #app {
 }
 
 .nav-link:hover {
-  color: #007bff; /* Cor ao passar o mouse */
+  color: #007bff;
+  /* Cor ao passar o mouse */
 }
 </style>
