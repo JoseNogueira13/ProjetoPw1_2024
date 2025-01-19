@@ -1,3 +1,76 @@
+import { defineStore } from "pinia";
+
+export const useUserStore = defineStore("user", {
+  state: () => ({
+    isAuthenticated: false,
+    user: null,
+    users: [
+      {
+        id: 1,
+        name: "Admin",
+        email: "admin@gmail.com",
+        password: "admin123",
+        information: [null],
+        roles: ["admin"],
+        ticketType: [],
+        calendar: [],
+        likedMovies: [],
+      },
+    ],
+  }),
+
+  getters: {
+    isAuthenticated: (state) => state.isAuthenticated,
+    getUser: (state) => state.user,
+    getUserCalendar: (state) => state.user?.calendar || [],
+    getLikedMovies: (state) => state.user?.likedMovies || [],
+  },
+
+  actions: {
+    login(email, password) {
+      const user = this.users.find(
+        (user) => user.email == email &&
+        user.password == password
+      ); console.log(user);
+
+      if (user) {
+        this.isUserAuthenticated = true;
+        this.user = user;
+      } else {
+        throw Error("User invalid!");
+      }
+    },
+    register(username, email, password, cPassword) {
+      const check = this.users.find(
+        (user) => user.email == email && password == cPassword
+      )
+      if (!check) {
+        throw new Error('Email already in use.');
+      }
+
+      const newUser = {
+        id: this.users.lenght + 1,
+        name:username,
+        email: email,
+        information: [null],
+        roles: ["user"],
+        ticketType: [],
+        calendar: [],
+        likedMovies: [],
+      }
+      this.users.push(newUser);
+      alert('Registration successful! You can now log in.');
+    },
+    logout() {
+      this.isUserAuthenticated = false;
+      this.user = null;
+    }
+  },
+  persist: true,
+});
+
+
+/*
 import { defineStore } from 'pinia';
 
 export const useUserStore = defineStore('user', {
@@ -129,7 +202,7 @@ export const useUserStore = defineStore('user', {
       const existingFilm = this.user.calendar.find(
         (item) => item.filmId.id === filmId.id
       );
-    
+
       if (!existingFilm) {
         this.user.calendar.push({ filmId, seen: false });
         localStorage.setItem("currentUser", JSON.stringify(this.user));
@@ -138,11 +211,11 @@ export const useUserStore = defineStore('user', {
         console.log(`Film with ID: ${filmId.id} is already in the calendar.`);
       }
     },
-    
+
 
     markFilmAsSeen(filmId) {
       if (!this.user) return;
-    
+
       const film = this.user.calendar.find((item) => item.filmId.id === filmId);
       if (film) {
         film.seen = true;
@@ -153,7 +226,7 @@ export const useUserStore = defineStore('user', {
 
     removeFromCalendar(filmId) {
       if (!this.user) return;
-    
+
       this.user.calendar = this.user.calendar.filter((item) => item.filmId.id !== filmId);
       localStorage.setItem("currentUser", JSON.stringify(this.user));
       console.log(`Film with ID: ${filmId} removed from calendar.`);
@@ -161,3 +234,4 @@ export const useUserStore = defineStore('user', {
   },
   persist: true
 });
+*/
