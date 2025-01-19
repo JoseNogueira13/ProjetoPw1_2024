@@ -132,7 +132,7 @@ import { RouterLink, RouterView } from "vue-router";
     </v-container>
 
     <!-- Main Content -->
-    <v-main class="fill-height">
+    <v-main fluid class="fill-height">
       <div class="content-container">
         <RouterView />
       </div>
@@ -151,17 +151,15 @@ import { RouterLink, RouterView } from "vue-router";
 </template>
 
 <style>
-html,
-body,
-#app {
+html, body, #app {
   height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   background-color: #f4f4f9;
+  overflow: hidden;
 }
 
 .v-app {
@@ -174,21 +172,22 @@ body,
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  padding-bottom: 50px;
+
 }
 
 .content-container {
   flex-grow: 1;
   overflow-y: auto;
-  padding-bottom: 64px;
-  /* Ajusta o espaço para o footer */
+  padding-bottom: 50px; /* A altura do rodapé */
 }
 
-/* Rodapé */
 .v-footer {
   z-index: 2;
   position: relative;
   background-color: #fff;
+  height: 50px; /* Altura do rodapé */
+  width: 100%; /* Garante que o rodapé ocupe toda a largura da tela */
 }
 
 .nav-link {
