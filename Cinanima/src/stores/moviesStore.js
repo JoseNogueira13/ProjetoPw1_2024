@@ -39,7 +39,7 @@ export const useMiniFilmStore = defineStore("miniFilm", {
           title: miniFilm.title,
           description: miniFilm.overview,
           image: `${IMAGE_BASE_URL}${miniFilm.poster_path}`,
-        })); console.log(this.miniFilms)
+        })); //console.log(this.miniFilms)
       }
       catch (error) {
         this.error = error.message || "Erro desconhecido";
@@ -87,29 +87,29 @@ export const useMiniFilmStore = defineStore("miniFilm", {
         console.error("User is not logged in!");
         return;
       }
-    
+
       const movie = this.miniFilms.find((film) => film.id === id);
       if (!movie) {
         console.error("Movie not found!");
         return;
       }
-    
+
       if (userStore.user.likedMovies.includes(id)) {
         console.log("User has already liked this movie!");
         return;
       }
 
       movie.likes = (movie.likes || 0) + 1;
-    
+
       userStore.user.likedMovies.push(id);
 
       localStorage.setItem("currentUser", JSON.stringify(userStore.user));
       localStorage.setItem("miniFilms", JSON.stringify(this.miniFilms));
-    
+
       if (this.currentMovie?.id === id) {
         this.currentMovie.likes = (this.currentMovie.likes || 0) + 1;
       }
-    
+
       console.log(`Movie with ID ${id} liked by ${userStore.user.name}`);
     },
     addComment(movieId, comment) {

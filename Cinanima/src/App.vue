@@ -9,7 +9,7 @@ export default {
     };
   },
   created() {
-    console.log(this.userStore.isUserAuthenticated)
+    //console.log(this.userStore.isAuthenticated)
   },
   computed: {
     isAuthenticated() {

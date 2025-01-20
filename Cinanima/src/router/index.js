@@ -7,6 +7,7 @@ import EventCalendarView from '../views/EventCalendarView.vue'
 import TicketView from '../views/TicketView.vue'
 import EventView from '../views/EventView.vue'
 import UserProfileView from '../views/UserProfileView.vue'
+import { useUserStore } from "../stores/userStore";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,7 +50,6 @@ const router = createRouter({
       name: 'event',
       component: EventView,
     },
-       
     {
       path: '/userProfile',
       name: 'userProfile',
@@ -72,18 +72,21 @@ const router = createRouter({
       path: '/testPage',
       name: 'testPage',
       component: () => import('../views/TestPageView.vue'),
-    }
-
+    },
   ],
 })
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem('isAuthenticated')
+  const userStore = useUserStore(); // Chama a função para obter a instância da store
+  const isAuthenticated = userStore.isAuthenticated; // Acessa o getter corretamente
+  //console.log("Is Authenticated:", isAuthenticated);
+
   if (to.meta.requiresAuth && !isAuthenticated) {
-    next({ path: '/authentication', query: { from: to.fullPath  } })
+    next({ path: '/authentication', query: { from: to.fullPath } });
   } else {
-    next()
+    next();
   }
-})
+});
+
 
 export default router
