@@ -56,12 +56,12 @@ export const useMiniFilmStore = defineStore("miniFilm", {
         const response = await API.get(BASE_URL,`movie/${id}?api_key=${API_KEY}`); //console.log(response);
 
         this.currentMovie = {
-          id: response.id,
-          title: response.title,
-          description: response.overview,
-          image: `${IMAGE_BASE_URL}${response.poster_path}`,
-          releaseDate: response.release_date,
-          rating: response.vote_average,
+          id: movieResponse.id,
+          title: movieResponse.title,
+          description: movieResponse.overview,
+          image: `${IMAGE_BASE_URL}${movieResponse.poster_path}`,
+          releaseDate: movieResponse.release_date,
+          rating: movieResponse.vote_average,
           likes: 0,
         }; console.log(this.currentMovie)
       } catch (error) {

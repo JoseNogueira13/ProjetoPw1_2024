@@ -73,12 +73,14 @@ export default {
             </v-list-item>
 
             <!-- Artist Profile -->
-            <v-list-item>
+            <v-list-item v-if="directorId">
               <v-list-item-icon>
                 <v-icon>mdi-account-circle</v-icon>
               </v-list-item-icon>
               <v-list-item-title>
-                <RouterLink :to="{ name: 'artistProfile' }" class="nav-link">Artist Profile</RouterLink>
+                <RouterLink :to="{ name: 'artistProfile', params: { directorId: directorId } }" class="nav-link">
+                  Artist Profile
+                </RouterLink>
               </v-list-item-title>
             </v-list-item>
 
