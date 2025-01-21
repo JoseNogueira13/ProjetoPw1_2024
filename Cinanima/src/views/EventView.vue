@@ -1,33 +1,102 @@
 <template>
-  <div v-if="loading">Loading movie details...</div>
-  <div v-else-if="error">{{ error }}</div>
-  <div v-else-if="movie">
-    <h1>{{ movie.title }}</h1>
-    <img :src="movie.image" :alt="movie.title" />
-    <p>{{ movie.description }}</p>
-    <p><strong>Release Date:</strong> {{ movie.releaseDate }}</p>
-    <p><strong>Rating:</strong> {{ movie.rating }}</p>
+  <v-main>
+    <v-container>
+      <!-- Card do Filme -->
+      <v-row justify="center" class="mb-5">
+        <v-col cols="12">
+          <v-card outlined class="movie-card">
+            <v-row>
+              <!-- Imagem do Filme (à esquerda, ocupa metade da tela) -->
+              <v-col cols="12" md="6" class="d-flex justify-center">
+                <v-img
+                  :src="movie.image"
+                  :alt="movie.title"
+                  height="auto"
+                  class="movie-image"
+                ></v-img>
+              </v-col>
 
-    <p v-if="movie.director">
-      <strong>Director:</strong>
-      <button @click="goToArtistProfile(movie.director.id)">
-        {{ movie.director.name }}
-      </button>
-    </p>
+              <!-- Detalhes do Filme (à direita, ocupa metade da tela) -->
+              <v-col cols="12" md="6">
+                <v-card-title class="text-h5">{{ movie.title }}</v-card-title>
+                <v-card-subtitle>
+                  <p><strong>Release Date:</strong> {{ movie.releaseDate }}</p>
+                  <p><strong>Rating:</strong> {{ movie.rating }}</p>
+                  <p v-if="movie.director">
+                    <strong>Director:</strong>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="goToArtistProfile(movie.director.id)"
+                    >
+                      {{ movie.director.name }}
+                    </v-btn>
+                  </p>
+                </v-card-subtitle>
+                <v-card-text>{{ movie.description }}</v-card-text>
+                <p>
+                  <strong>Likes:</strong> {{ movie.likes || 0 }}
+                  <v-btn
+                    text
+                    color="success"
+                    :disabled="isLiked"
+                    @click="likeMovie(movie.id)"
+                  >
+                    {{ isLiked ? "Liked" : "Like" }}
+                  </v-btn>
+                </p>
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>
+      </v-row>
 
-    <p>
-      <strong>Likes:</strong> {{ movie.likes || 0 }}
-      <button 
-        @click="likeMovie(movie.id)" 
-        :disabled="isLiked">
-        {{ isLiked ? "Liked" : "Like" }}
-      </button>
-    </p>
-
-    <section class="comments">
-    </section>
-  </div>
+      <!-- Seção de Comentários -->
+      <v-row justify="center">
+        <v-col cols="12">
+          <v-card outlined>
+            <v-card-title>Comments</v-card-title>
+            <v-card-text>
+              <v-list>
+                <v-list-item
+                  v-for="comment in movieComments"
+                  :key="comment.id"
+                  class="comment-item"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      <strong>{{ comment.username }}</strong>
+                      <small>{{ comment.time }}</small>
+                    </v-list-item-title>
+                    <v-list-item-subtitle>{{ comment.text }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+              <v-textarea
+                outlined
+                dense
+                label="Add a comment"
+                v-model="newComment"
+                class="mt-4"
+              ></v-textarea>
+              <v-btn
+                color="primary"
+                class="mt-2"
+                @click="postComment"
+                :disabled="!newComment"
+              >
+                Post Comment
+              </v-btn>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-main>
 </template>
+
+
+
 
 <script>
 import { useMiniFilmStore } from "@/stores/moviesStore.js";
@@ -78,9 +147,8 @@ export default {
       this.newComment = "";
     },
     goToArtistProfile(directorId) {
-  console.log("Navigating to director profile:", directorId);
-  this.$router.push({ name: 'artistProfile', params: { directorId } });
-}
+      this.$router.push({ name: "artistProfile", params: { directorId } });
+    },
   },
   async created() {
     const id = this.$route.params.id;
@@ -88,3 +156,27 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.v-main{
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+.movie-image {
+  width: 100%; /* Faz com que a imagem ocupe toda a largura disponível */
+  margin: 15px;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.comment-item {
+  border-bottom: 1px solid #eee;
+  padding: 8px 0;
+}
+
+.v-btn {
+  margin: 5px 0;
+}
+</style>
+
+

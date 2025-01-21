@@ -53,7 +53,15 @@ export const useMiniFilmStore = defineStore("miniFilm", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await API.get(BASE_URL,`movie/${id}?api_key=${API_KEY}`); //console.log(response);
+        const movieResponse = await API.get(BASE_URL, `movie/${id}?api_key=${API_KEY}`);
+
+        const creditsResponse = await API.get(BASE_URL, `movie/${id}/credits?api_key=${API_KEY}`);
+
+        // Get the director
+        const director = creditsResponse.crew.find((crewMember) => crewMember.job === "Director");
+
+        // Get the cast (all actors/voice actors)
+        const cast = creditsResponse.cast;
 
         this.currentMovie = {
           id: movieResponse.id,
@@ -63,13 +71,18 @@ export const useMiniFilmStore = defineStore("miniFilm", {
           releaseDate: movieResponse.release_date,
           rating: movieResponse.vote_average,
           likes: 0,
-        }; console.log(this.currentMovie)
-      } catch (error) {
+          director: director ? director : null,
+          cast: cast ? cast : [],
+        };
+
+        console.log(this.currentMovie);
+      } catch(error) {
         this.error = error.message || "Failed to fetch movie details";
       } finally {
         this.loading = false;
       }
-    },/*--------------------------------Funções admistrador--------------------------------*/
+    },
+    /*--------------------------------Funções admistrador--------------------------------*/
     addFilm(film) {
       this.miniFilms.push(film);
     },
