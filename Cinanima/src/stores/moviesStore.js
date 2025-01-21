@@ -32,19 +32,20 @@ export const useMiniFilmStore = defineStore("miniFilm", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await API.get(BASE_URL, `discover/movie?api_key=${API_KEY}`); //console.log(response);
+        const response = await API.get(
+          BASE_URL,
+          `discover/movie?api_key=${API_KEY}&with_genres=16&with_runtime.lte=40`
+        );
 
-        this.miniFilms = response.results.map(miniFilm => ({
+        this.miniFilms = response.results.map((miniFilm) => ({
           id: miniFilm.id,
           title: miniFilm.title,
           description: miniFilm.overview,
           image: `${IMAGE_BASE_URL}${miniFilm.poster_path}`,
-        })); //console.log(this.miniFilms)
-      }
-      catch (error) {
-        this.error = error.message || "Erro desconhecido";
-      }
-      finally {
+        }));
+      } catch (error) {
+        this.error = error.message || "Erro desconhecido ao carregar filmes.";
+      } finally {
         this.loading = false;
       }
     },
