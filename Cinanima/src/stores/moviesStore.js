@@ -32,19 +32,17 @@ export const useMiniFilmStore = defineStore("miniFilm", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await API.get(BASE_URL, `discover/movie?api_key=${API_KEY}`); //console.log(response);
-
+        const response = await API.get(BASE_URL, `discover/movie?api_key=${API_KEY}&with_genres=16`); // console.log(response);
+        
         this.miniFilms = response.results.map(miniFilm => ({
           id: miniFilm.id,
           title: miniFilm.title,
           description: miniFilm.overview,
           image: `${IMAGE_BASE_URL}${miniFilm.poster_path}`,
-        })); //console.log(this.miniFilms)
-      }
-      catch (error) {
+        }));
+      } catch (error) {
         this.error = error.message || "Erro desconhecido";
-      }
-      finally {
+      } finally {
         this.loading = false;
       }
     },
@@ -52,23 +50,37 @@ export const useMiniFilmStore = defineStore("miniFilm", {
       this.loading = true;
       this.error = null;
       try {
-        const response = await API.get(BASE_URL,`movie/${id}?api_key=${API_KEY}`); //console.log(response);
-
+        const movieResponse = await API.get(BASE_URL, `movie/${id}?api_key=${API_KEY}`);
+        
+        const creditsResponse = await API.get(BASE_URL, `movie/${id}/credits?api_key=${API_KEY}`);
+    
+        // Get the director
+        const director = creditsResponse.crew.find((crewMember) => crewMember.job === "Director");
+    
+        // Get the cast (all actors/voice actors)
+        const cast = creditsResponse.cast;
+    
         this.currentMovie = {
-          id: response.id,
-          title: response.title,
-          description: response.overview,
-          image: `${IMAGE_BASE_URL}${response.poster_path}`,
-          releaseDate: response.release_date,
-          rating: response.vote_average,
+          id: movieResponse.id,
+          title: movieResponse.title,
+          description: movieResponse.overview,
+          image: `${IMAGE_BASE_URL}${movieResponse.poster_path}`,
+          releaseDate: movieResponse.release_date,
+          rating: movieResponse.vote_average,
           likes: 0,
-        }; console.log(this.currentMovie)
+          director: director ? director : null,
+          cast: cast ? cast : [],
+        };
+    
+        console.log(this.currentMovie);
       } catch (error) {
         this.error = error.message || "Failed to fetch movie details";
       } finally {
         this.loading = false;
       }
-    },/*--------------------------------Funções admistrador--------------------------------*/
+    },
+    
+    /*--------------------------------Funções admistrador--------------------------------*/
     addFilm(film) {
       this.miniFilms.push(film);
     },

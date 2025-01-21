@@ -8,35 +8,24 @@
     <p><strong>Release Date:</strong> {{ movie.releaseDate }}</p>
     <p><strong>Rating:</strong> {{ movie.rating }}</p>
 
+    <p v-if="movie.director">
+      <strong>Director:</strong>
+      <button @click="goToArtistProfile(movie.director.id)">
+        {{ movie.director.name }}
+      </button>
+    </p>
+
     <p>
       <strong>Likes:</strong> {{ movie.likes || 0 }}
       <button 
-        @click="likeMovie(movie.id)" :disabled="isLiked">{{ isLiked ? "Liked" : "Like" }}
+        @click="likeMovie(movie.id)" 
+        :disabled="isLiked">
+        {{ isLiked ? "Liked" : "Like" }}
       </button>
     </p>
 
     <section class="comments">
-      <h2>Comments</h2>
-
-      <form @submit.prevent="postComment">
-        <input 
-          v-model="newComment" 
-          type="text" 
-          placeholder="Add a comment" 
-          required 
-        />
-        <button type="submit">Post Comment</button>
-      </form>
-
-      <ul>
-        <li v-for="comment in movieComments" :key="comment.id">
-          <strong>{{ comment.username }}</strong> 
-          <small>({{ comment.time }})</small>
-          <p>{{ comment.text }}</p>
-        </li>
-      </ul>
     </section>
-
   </div>
 </template>
 
@@ -63,7 +52,7 @@ export default {
       return this.miniFilmStore.getError;
     },
     isLiked() {
-    return this.userStore.getLikedMovies.includes(this.movie.id);
+      return this.userStore.getLikedMovies.includes(this.movie.id);
     },
     movieComments() {
       return this.miniFilmStore.comments[this.movie.id] || [];
@@ -88,6 +77,10 @@ export default {
 
       this.newComment = "";
     },
+    goToArtistProfile(directorId) {
+  console.log("Navigating to director profile:", directorId);
+  this.$router.push({ name: 'artistProfile', params: { directorId } });
+}
   },
   async created() {
     const id = this.$route.params.id;

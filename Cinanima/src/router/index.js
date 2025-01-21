@@ -31,10 +31,11 @@ const router = createRouter({
       },
     },
     {
-      path: '/artistProfile',
+      path: '/artistProfile/:directorId',
       name: 'artistProfile',
       component: ArtistProfileView,
     },
+    
     {
       path: '/eventCalendar',
       name: 'eventCalendar',
