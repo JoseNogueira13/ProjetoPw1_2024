@@ -145,6 +145,7 @@ export default {
             </v-list-item>
 
             <!-- Test Page -->
+            <!--
             <v-list-item>
               <v-list-item-icon>
                 <v-icon>mdi-test-tube</v-icon>
@@ -153,6 +154,7 @@ export default {
                 <RouterLink :to="{ name: 'testPage' }" class="nav-link">TestPage</RouterLink>
               </v-list-item-title>
             </v-list-item>
+            -->
 
           </v-list-item-group>
         </v-list>

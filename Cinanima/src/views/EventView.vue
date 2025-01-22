@@ -175,7 +175,7 @@ export default {
 }
 
 .v-btn {
-  margin: 5px 0;
+  margin: 5px;
 }
 </style>
 
