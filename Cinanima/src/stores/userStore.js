@@ -16,6 +16,17 @@ export const useUserStore = defineStore('user', {
         calendar: [],
         likedMovies: [],
       },
+      {
+        id: 2,
+        name: 'User',
+        email: 'user@email.com',
+        password: 'user123',
+        information: [null],
+        roles: ['user'],
+        ticketType: [],
+        calendar: [],
+        likedMovies: [],
+      }
     ],
   }),
 
@@ -39,24 +50,31 @@ export const useUserStore = defineStore('user', {
       }
     },
     register(username, email, password, cPassword) {
-      const check = this.users.find((user) => user.email == email && password == cPassword)
-      if (!check) {
-        throw new Error('Email already in use.')
+      if (password !== cPassword) {
+        throw new Error('Passwords do not match.');
       }
-
+    
+      const emailExists = this.users.some((user) => user.email === email);
+      if (emailExists) {
+        throw new Error('Email already in use.');
+      }
+    
       const newUser = {
-        id: this.users.lenght + 1,
+        id: this.users.length + 1,
         name: username,
         email: email,
+        password,
         information: [null],
         roles: ['user'],
         ticketType: [],
         calendar: [],
         likedMovies: [],
-      }
-      this.users.push(newUser)
-      alert('Registration successful! You can now log in.')
+      };
+    
+      this.users.push(newUser);
+      alert('Registration successful! You can now log in.');
     },
+    
     logout() {
       this.isUserAuthenticated = false
       this.user = null
