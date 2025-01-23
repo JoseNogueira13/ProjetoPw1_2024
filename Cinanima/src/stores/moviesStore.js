@@ -93,7 +93,7 @@ export const useMiniFilmStore = defineStore('miniFilm', {
     editFilm(updatedFilm) {
       const index = this.miniFilms.findIndex((film) => film.idFilm === updatedFilm.idFilm)
       if (index !== -1) {
-        this.miniFilms[index] = { ...updatedFilm } // Atualiza o filme correspondente
+        this.miniFilms[index] = { ...updatedFilm }
       }
     },
     likeMovie(id) {
