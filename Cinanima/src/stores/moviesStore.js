@@ -17,7 +17,7 @@ export const useMiniFilmStore = defineStore('miniFilm', {
     error: null,
     currentMovie: null,
     comments: JSON.parse(localStorage.getItem('movieComments')) || {},
-    likes: {},
+    likes: [],
   }),
 
   getters: {
@@ -42,6 +42,7 @@ export const useMiniFilmStore = defineStore('miniFilm', {
           title: miniFilm.title,
           description: miniFilm.overview,
           image: `${IMAGE_BASE_URL}${miniFilm.poster_path}`,
+          likes: 0,
         }))
       } catch (error) {
         this.error = error.message || 'Erro desconhecido ao carregar filmes.'
@@ -68,6 +69,9 @@ export const useMiniFilmStore = defineStore('miniFilm', {
         const cast = creditsResponse.cast;
         console.log(cast)
 
+        const existingMovie = this.miniFilms.find((film) => film.id == id);
+        const likes = existingMovie ? existingMovie.likes || 0 : 0;
+        
         this.currentMovie = {
           id: movieResponse.id,
           title: movieResponse.title,
@@ -75,7 +79,7 @@ export const useMiniFilmStore = defineStore('miniFilm', {
           image: `${IMAGE_BASE_URL}${movieResponse.poster_path}`,
           releaseDate: movieResponse.release_date,
           rating: movieResponse.vote_average,
-          likes: 0,
+          likes: likes,
           director: director ? director : null,
           cast: cast ? cast : [],
         }; //console.log(this.currentMovie);
@@ -125,6 +129,7 @@ export const useMiniFilmStore = defineStore('miniFilm', {
 
       if (this.currentMovie?.id === id) {
         this.currentMovie.likes = (this.currentMovie.likes || 0) + 1
+
       }
 
       console.log(`Movie with ID ${id} liked by ${userStore.user.name}`)
