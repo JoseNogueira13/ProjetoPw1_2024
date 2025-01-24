@@ -60,10 +60,12 @@ export const useMiniFilmStore = defineStore('miniFilm', {
         // Get the director
         const director = creditsResponse.crew.find((crewMember) => crewMember.job === 'Director')
         console.log(director)
+
         const directorImage =await API.get(`https://api.themoviedb.org/3`,`person/${director.id}/images?api_key=${API_KEY}`)
         console.log(directorImage)
+
         // Get the cast (all actors/voice actors)
-        const cast = creditsResponse.cast
+        const cast = creditsResponse.cast;
         console.log(cast)
 
         this.currentMovie = {
@@ -76,7 +78,7 @@ export const useMiniFilmStore = defineStore('miniFilm', {
           likes: 0,
           director: director ? director : null,
           cast: cast ? cast : [],
-        } //console.log(this.currentMovie);
+        }; //console.log(this.currentMovie);
       } catch (error) {
         this.error = error.message || 'Failed to fetch movie details'
       } finally {

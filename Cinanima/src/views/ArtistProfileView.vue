@@ -44,7 +44,7 @@
             <v-card-title class="text-h6">Cast</v-card-title>
             <v-card-text>
               <v-row>
-                <v-col cols="12" sm="6" md="4" v-for="actor in cast" :key="actor.id" class="mb-3">
+                <v-col cols="12" sm="6" md="6" v-for="actor in cast" :key="actor.id" class="mb-3">
                   <v-card outlined>
                     <v-img
                       :src="`${IMAGE_BASE_URL}${actor.profile_path}`"
@@ -55,9 +55,9 @@
                     ></v-img>
                     <v-card-text>
                       <p class="text-center">
+                        <!-- <h2>{{ actor.id }}</h2> -->
                         <strong>{{ actor.name }}</strong>
-                        <br />
-                        as {{ actor.character }}
+                        <span></span>
                       </p>
                     </v-card-text>
                   </v-card>
@@ -98,6 +98,7 @@ export default {
       return this.miniFilmStore.getError;
     },
   },
+  created() {}
 };
 </script>
 

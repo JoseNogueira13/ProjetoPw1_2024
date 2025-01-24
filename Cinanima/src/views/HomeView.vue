@@ -5,7 +5,7 @@
       <v-col cols="12">
         <v-carousel>
           <v-carousel-item v-for="(item, i) in miniFilms" :key="i">
-            <v-img :src="item.image" :alt="item.title" lazy-src></v-img>
+            <v-img :src="item.image" :alt="item.title" ></v-img>
           </v-carousel-item>
         </v-carousel>
       </v-col>

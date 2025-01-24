@@ -8,12 +8,7 @@
             <v-row>
               <!-- Imagem do Filme (à esquerda, ocupa metade da tela) -->
               <v-col cols="12" md="6" class="d-flex justify-center">
-                <v-img
-                  :src="movie.image"
-                  :alt="movie.title"
-                  height="auto"
-                  class="movie-image"
-                ></v-img>
+                <v-img :src="movie.image" :alt="movie.title" height="auto" class="movie-image"></v-img>
               </v-col>
 
               <!-- Detalhes do Filme (à direita, ocupa metade da tela) -->
@@ -24,24 +19,27 @@
                   <p><strong>Rating:</strong> {{ movie.rating }}</p>
                   <p v-if="movie.director">
                     <strong>Director:</strong>
-                    <v-btn
-                      text
-                      color="primary"
-                      @click="goToArtistProfile(movie.director.id)"
-                    >
+                    <v-btn text color="primary" @click="goToArtistProfile(movie.director.id)">
                       {{ movie.director.name }}
                     </v-btn>
                   </p>
+                  <p v-if="movie.cast && movie.cast.length">
+                    <strong>Cast:</strong>
+                    <v-row class="cast-row">
+                      <v-col cols="auto" v-for="cast in movie.cast" :key="cast.id" class="cast-row cast-col">
+                        <v-btn text color="secondary" class="cast-btn" @click="goToArtistProfile(cast.id)">
+                          {{ cast.id }}
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                  </p>
+
                 </v-card-subtitle>
+
                 <v-card-text>{{ movie.description }}</v-card-text>
                 <p>
                   <strong>Likes:</strong> {{ movie.likes || 0 }}
-                  <v-btn
-                    text
-                    color="success"
-                    :disabled="isLiked"
-                    @click="likeMovie(movie.id)"
-                  >
+                  <v-btn text color="success" :disabled="isLiked" @click="likeMovie(movie.id)">
                     {{ isLiked ? "Liked" : "Like" }}
                   </v-btn>
                 </p>
@@ -58,11 +56,7 @@
             <v-card-title>Comments</v-card-title>
             <v-card-text>
               <v-list>
-                <v-list-item
-                  v-for="comment in movieComments"
-                  :key="comment.id"
-                  class="comment-item"
-                >
+                <v-list-item v-for="comment in movieComments" :key="comment.id" class="comment-item">
                   <v-list-item-content>
                     <v-list-item-title>
                       <strong>{{ comment.username }}</strong>
@@ -72,19 +66,8 @@
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
-              <v-textarea
-                outlined
-                dense
-                label="Add a comment"
-                v-model="newComment"
-                class="mt-4"
-              ></v-textarea>
-              <v-btn
-                color="primary"
-                class="mt-2"
-                @click="postComment"
-                :disabled="!newComment"
-              >
+              <v-textarea outlined dense label="Add a comment" v-model="newComment" class="mt-4"></v-textarea>
+              <v-btn color="primary" class="mt-2" @click="postComment" :disabled="!newComment">
                 Post Comment
               </v-btn>
             </v-card-text>
@@ -94,9 +77,6 @@
     </v-container>
   </v-main>
 </template>
-
-
-
 
 <script>
 import { useMiniFilmStore } from "@/stores/moviesStore.js";
@@ -146,8 +126,8 @@ export default {
 
       this.newComment = "";
     },
-    goToArtistProfile(directorId) {
-      this.$router.push({ name: "artistProfile", params: { directorId } });
+    goToArtistProfile(id) {
+      this.$router.push({ name: "artistProfile", params: { id } });
     },
   },
   async created() {
@@ -158,12 +138,14 @@ export default {
 </script>
 
 <style scoped>
-.v-main{
+.v-main {
   margin-left: 0 !important;
   padding-left: 0 !important;
 }
+
 .movie-image {
-  width: 100%; /* Faz com que a imagem ocupe toda a largura disponível */
+  width: 100%;
+  /* Faz com que a imagem ocupe toda a largura disponível */
   margin: 15px;
   padding: 15px;
   border-radius: 8px;
@@ -177,6 +159,22 @@ export default {
 .v-btn {
   margin: 5px;
 }
+
+.cast-row {
+  display: inline-flex;
+  /* Mantém os itens em linha */
+  flex-wrap: wrap;
+  /* Permite que os itens quebrem para a próxima linha */
+  align-items: center;
+  /* Alinha verticalmente no centro */
+  padding-top: 10px;
+  margin: 1px;
+}
+
+.cast-row.cast-col {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 5px;
+}
 </style>
-
-
