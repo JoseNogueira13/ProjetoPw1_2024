@@ -28,7 +28,7 @@
                     <v-row class="cast-row">
                       <v-col cols="auto" v-for="cast in movie.cast" :key="cast.id" class="cast-row cast-col">
                         <v-btn text color="secondary" class="cast-btn" @click="goToArtistProfile(cast.id)">
-                          {{ cast.id }}
+                          {{ cast.name }}
                         </v-btn>
                       </v-col>
                     </v-row>
