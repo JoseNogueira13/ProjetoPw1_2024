@@ -12,12 +12,12 @@ const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500'
 
 export const useMiniFilmStore = defineStore('miniFilm', {
   state: () => ({
-    miniFilms: [],
+    miniFilms: JSON.parse(localStorage.getItem('miniFilms')) || [],
     loading: false,
     error: null,
     currentMovie: null,
     comments: JSON.parse(localStorage.getItem('movieComments')) || {},
-    likes: [],
+    likes: JSON.parse(localStorage.getItem('movieLikes')) || {},
   }),
 
   getters: {
@@ -42,7 +42,7 @@ export const useMiniFilmStore = defineStore('miniFilm', {
           title: miniFilm.title,
           description: miniFilm.overview,
           image: `${IMAGE_BASE_URL}${miniFilm.poster_path}`,
-          likes: 0,
+          likes: miniFilm.likes,
         }))
       } catch (error) {
         this.error = error.message || 'Erro desconhecido ao carregar filmes.'
@@ -60,17 +60,16 @@ export const useMiniFilmStore = defineStore('miniFilm', {
 
         // Get the director
         const director = creditsResponse.crew.find((crewMember) => crewMember.job === 'Director')
-        //console.log(director)
+        console.log(director)
 
         const directorImage =await API.get(`https://api.themoviedb.org/3`,`person/${director.id}/images?api_key=${API_KEY}`)
-        //console.log(directorImage)
+        console.log(directorImage)
 
         // Get the cast (all actors/voice actors)
         const cast = creditsResponse.cast;
-        //console.log(cast)
+        console.log(cast)
 
-        const existingMovie = this.miniFilms.find((film) => film.id == id);
-        const likes = existingMovie ? existingMovie.likes || 0 : 0;
+        const likes = this.likes[id] || 0;
         
         this.currentMovie = {
           id: movieResponse.id,
@@ -121,11 +120,14 @@ export const useMiniFilmStore = defineStore('miniFilm', {
       }
 
       movie.likes = (movie.likes || 0) + 1
+      this.likes[id] = (this.likes[id] || 0) + 1;
+
+      localStorage.setItem('miniFilms', JSON.stringify(this.miniFilms))
+      localStorage.setItem('movieLikes', JSON.stringify(this.likes));
 
       userStore.user.likedMovies.push(id)
 
       localStorage.setItem('currentUser', JSON.stringify(userStore.user))
-      localStorage.setItem('miniFilms', JSON.stringify(this.miniFilms))
 
       if (this.currentMovie?.id === id) {
         this.currentMovie.likes = (this.currentMovie.likes || 0) + 1
