@@ -59,14 +59,14 @@ export const useMiniFilmStore = defineStore('miniFilm', {
 
         // Get the director
         const director = creditsResponse.crew.find((crewMember) => crewMember.job === 'Director')
-        console.log(director)
+        //console.log(director)
 
         const directorImage =await API.get(`https://api.themoviedb.org/3`,`person/${director.id}/images?api_key=${API_KEY}`)
-        console.log(directorImage)
+        //console.log(directorImage)
 
         // Get the cast (all actors/voice actors)
         const cast = creditsResponse.cast;
-        console.log(cast)
+        //console.log(cast)
 
         this.currentMovie = {
           id: movieResponse.id,
