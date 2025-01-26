@@ -80,41 +80,43 @@ export const useUserStore = defineStore('user', {
       this.user = null
     },
     addToCalendar(filmId) {
-      console.log(filmId)
       if (!this.user) {
-        console.log('No user is logged in.')
-        return
+        console.log('No user is logged in.');
+        return;
       }
-
-      const existingFilm = this.user.calendar.find((item) => item.filmId.id === filmId.id)
-
+    
+      const existingFilm = this.user.calendar.find((item) => item.filmId === filmId);
+    
       if (!existingFilm) {
-        this.user.calendar.push({ filmId, seen: false })
-        console.log(`Film with ID: ${filmId} added to calendar.`)
+        this.user.calendar.push({ filmId, seen: false });
+        console.log(`Film with ID: ${filmId} added to calendar.`);
       } else {
-        console.log(`Film with ID: ${filmId} is already in the calendar.`)
+        console.log(`Film with ID: ${filmId} is already in the calendar.`);
       }
+    
+      localStorage.setItem('currentUser', JSON.stringify(this.user));
     },
     markFilmAsSeen(filmId) {
       if (!this.user) return
 
-      const film = this.user.calendar.find((item) => item.filmId.id === filmId)
+      const film = this.user.calendar.find((item) => item.filmId === filmId)
       if (film) {
         film.seen = true
         console.log(`Film with ID: ${filmId} marked as seen.`)
       }
     },
     removeFromCalendar(filmId) {
-      if (!this.user) return
-
-      // Filtrando os filmes e criando um novo array
-      this.user.calendar = this.user.calendar.filter((item) => {
-        item.filmId.id !== filmId
-      })
-      //console.log(this.user.calendar)
-
-      // Forçar a reatividade
-      console.log(`Film with ID: ${filmId} removed from calendar.`)
+      if (!this.user) return;
+    
+      // Correctly filter the calendar to exclude the specified filmId
+      this.user.calendar = this.user.calendar.filter((item) => item.filmId !== filmId);
+    
+      // Log for debugging
+      console.log(`Film with ID: ${filmId} removed from calendar.`);
+      console.log(this.user.calendar);
+    
+      // Persist the updated calendar to localStorage
+      localStorage.setItem('currentUser', JSON.stringify(this.user));
     },
   },
   persist: true,
